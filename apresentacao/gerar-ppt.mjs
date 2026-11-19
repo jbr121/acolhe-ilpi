@@ -89,6 +89,7 @@ function card(s, x, y, w, h, opts = {}) {
 // 1. CAPA
 // =================================================================
 {
+  page += 1;
   const s = pptx.addSlide();
   s.background = { color: C.tealDark };
   s.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: W, h: 0.16, fill: { color: C.terra } });
@@ -168,8 +169,13 @@ divider("1", "O problema").addNotes("Começamos pela dor que investigamos na ime
   s.addText("Ela precisa de:", { x: 5.7, y: 2.0, w: 7, h: 0.5, fontFace: HEAD, fontSize: 20, bold: true, color: C.tealDark });
   const need = (y, title, sub, tone, toneSoft) => {
     card(s, 5.7, y, 6.95, 1.15, { fill: toneSoft, line: "none", shadow: false });
-    s.addText(title, { x: 6.0, y, w: 6.4, h: 1.15, valign: "middle", fontFace: BODY, fontSize: 17, bold: true, color: tone });
-    s.addText(sub, { x: 6.0, y: y + 0.52, w: 6.4, h: 0.6, valign: "top", fontFace: BODY, fontSize: 12.5, color: C.ink });
+    s.addText(
+      [
+        { text: title, options: { fontSize: 16, bold: true, color: tone, breakLine: true } },
+        { text: sub, options: { fontSize: 12.5, color: C.ink, bold: false } },
+      ],
+      { x: 6.0, y, w: 6.4, h: 1.15, valign: "middle", fontFace: BODY, align: "left", lineSpacingMultiple: 1.15, paraSpaceAfter: 4 },
+    );
   };
   need(2.6, "Alarme alto de atraso", "avisar na hora quando a medicação passa do horário", C.warn, C.warnSoft);
   need(3.9, "Registro nominal", "gravar exatamente quem fez cada tarefa", C.teal, C.tealSoft);
